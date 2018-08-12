@@ -1,0 +1,30 @@
+{
+    "name": "promise-registry",
+    "version": "0.0.1",
+    "description": "Creates a registry of promises to which promises can be registered and from which promises can be obtained.",
+    "main": "promise-registry.js",
+    "jsnext:main": "promise-registry.es6.js",
+    "module": "promise-registry.es6.js",
+    "scripts": {
+        "test": "jest",
+        "prepublish": "node scripts/prepublish.js"
+    },
+    "author": "Ryan Laws",
+    "license": "ISC",
+    "devDependencies": {
+        "babel-preset-env": "^1.7.0",
+        "jest": "^23.5.0"
+    },
+    "dependencies": {
+        "npm": "^6.3.0"
+    },
+    "jest": {
+        "testMatch": [
+            "**/test/**/*.test.js"
+        ],
+        "collectCoverageFrom": [
+            "promise-registry.js"
+        ],
+        "collectCoverage": true
+    }
+}

@@ -1,0 +1,8 @@
+# Generated files
+promise-registry.es6.js
+
+# Coverage report
+coverage
+
+# Installed npm modules
+node_modules
