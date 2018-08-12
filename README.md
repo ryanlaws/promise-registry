@@ -47,9 +47,9 @@ const callApi = async (url) => {
 
 const getRecords = ([response, keysToGet]) => {
     let records = [];
-    for (const key in keysToGet) {
+    keysToGet.forEach(key => {
         records[key] = response[key];
-    }
+    });
     return records;
 }
 
