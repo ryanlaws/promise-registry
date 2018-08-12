@@ -39,16 +39,18 @@ const promiseRegistry = require('promise-registry');
 
 const config = require('./config.js');
 const userInput = require('./user-input.js');
+const display = require('./display.js');
 
 // Example functions 
 const callApi = async (url) => {
     return fetch(url).then(response => response.json())
 }
 
-const getRecords = ([response, keysToGet]) => {
+const getRecords = async ([response, keysToGet]) => {
     let records = [];
     keysToGet.forEach(key => {
-        records[key] = response[key];
+        const record = response[key];
+        records[key] = record;
     });
     return records;
 }
@@ -65,11 +67,17 @@ const apiResponse = initialization.once('api-response');
 // Get a promise that isn't registered yet
 const keysToGet = initialization.once('user-selected-keys');
 
-// Call once resolved
-Promise.all([apiResponse, keysToGet]).then(getRecords);
+// Call once both above promises resolve
+const recordsToShow = Promise.all([apiResponse, keysToGet]).then(getRecords);
+
+// Register another new promise
+initialization.register('records-to-show', recordsToShow);
 
 // Register a promise by a name that's already depended on
 initialization.register('user-selected-keys', userInput.selectResponseKeys());
+
+// Call once all promises resolve
+initialization.once('records-to-show').then(display.showRecords);
 ```
 
 ## API
