@@ -55,14 +55,19 @@ const getRecords = ([response, keysToGet]) => {
 
 // Make a new registry
 const initialization = promiseRegistry.makeRegistry();
+
 // Register a new promise
 initialization.register('api-response', callApi(config.getApiUrl()));
+
 // Get a registered promise
 const apiResponse = initialization.once('api-response');
+
 // Get a promise that isn't registered yet
 const keysToGet = initialization.once('user-selected-keys');
+
 // Call once resolved
 Promise.all([apiResponse, keysToGet]).then(getRecords);
+
 // Register a promise by a name that's already depended on
 initialization.register('user-selected-keys', userInput.selectResponseKeys());
 ```
