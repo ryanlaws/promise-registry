@@ -15,9 +15,7 @@
         "babel-preset-env": "^1.7.0",
         "jest": "^23.5.0"
     },
-    "dependencies": {
-        "npm": "^6.3.0"
-    },
+    "dependencies": {},
     "jest": {
         "testMatch": [
             "**/test/**/*.test.js"
