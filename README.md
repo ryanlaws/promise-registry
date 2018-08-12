@@ -30,4 +30,4 @@ Get promise registered with `promiseName`. Can use before registration.
 Register `promise` with `promiseName`.
 
 ### `promiseRegistry.makeRegistry()`
-Create new registry with own once() and register() functions.
+Create new registry with own `once()` and `register()` functions.
