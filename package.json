@@ -10,6 +10,10 @@
         "prepublish": "node scripts/prepublish.js"
     },
     "author": "Ryan Laws",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ryanlaws/promise-registry.git"
+    },
     "license": "ISC",
     "devDependencies": {
         "babel-preset-env": "^1.7.0",
