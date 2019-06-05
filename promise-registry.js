@@ -8,7 +8,7 @@ function assertPromiseIsValid(promise) {
         throw new Error('promise is not a Promise');
 }
 
-function assertPreRegistrationPromiseExists(registry, name) {
+function assertPreRegistrationPromiseNonexistent(registry, name) {
     if (!registry[name].resolveOnRegister)
         throw new Error(`promise already registered with name "${name}".`);
 }
@@ -34,7 +34,7 @@ function resolvePreRegistrationPromise(registry, name, promise) {
 
 function registerWithPromise(registry, name, promise) {
     if (registry[name]) {
-        assertPreRegistrationPromiseExists(registry, name);
+        assertPreRegistrationPromiseNonexistent(registry, name);
         resolvePreRegistrationPromise(registry, name, promise);
     }
 
@@ -71,5 +71,5 @@ const makeRegistry = function () {
 }
 
 const defaultRegistry = makeRegistry();
-const promiseRegistry = Object.assign(defaultRegistry, { makeRegistry });
+const promiseRegistry = { ...defaultRegistry, makeRegistry };
 module.exports = promiseRegistry;
