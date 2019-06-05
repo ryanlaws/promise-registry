@@ -7,7 +7,7 @@
     "module": "promise-registry.es6.js",
     "scripts": {
         "test": "jest",
-        "prepublish": "node scripts/prepublish.js"
+        "prepare": "node scripts/build.js"
     },
     "author": "Ryan Laws",
     "repository": {
