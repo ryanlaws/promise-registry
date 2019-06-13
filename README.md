@@ -21,7 +21,7 @@ registry.
 
 ## Installation
 
-Via [npm](https://www.npmjs.com/):
+Via [npm](https://www.npmjs.com/package/promise-registry):
 
 ```bash
 npm install promise-registry --save
