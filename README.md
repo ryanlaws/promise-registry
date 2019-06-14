@@ -1,13 +1,25 @@
 # promise-registry 
-promise-registry creates a registry (a la AMD) of promises to which promises
-can be registered and from which promises can be obtained. It creates a
-default registry which can be used right away with the exported `once` and
+A global registry of promises, and a factory for registries. 
+
+With a registry you can:
+- Register promises (with `register`)
+- Obtain registered promises (with `once`)
+- Obtain promises that aren't registered yet (with `once`)
+
+To use the global registry, use `once` and `register`.
+
+Create a new registry with `makeRegistry`. It will have its own `once` and
 `register` functions.
 
-New registries can be created with `makeRegistry` and will have their own
-separate `once` and `register` functions.
+## OK, so what?
+This lets you:
+- Give promises a global name
+- Treat promises like events
+- Wait for promises that haven't even been made yet
+- Use a promise in a completely different place from where it is generated,
+    without the plumbing to pass it around
 
-## Why?
+## I don't like bullet points. Talk to me.
 Sometimes you need to depend on asynchronous behavior but it isn't convenient
 to pass promises around as values. As long as modules use the same registry
 and the same name, they get the same promise. Also, being able to get a
@@ -15,9 +27,45 @@ promise by name before it is registered removes the need to coordinate the
 creation of that promise. 
 
 This can be particularly useful for asynchronous dependencies during e.g.
-initialization. Steps are named, and dependencies and dependents can be
-declared separately and loaded in the correct order as long as they share the
-registry.
+initialization. 
+
+Steps have names. 
+### init.js
+```javascript
+const { register, once } = require('promise-registry');
+const appSettings = require ('./app-settings.js');
+const cookies = require ('./cookies.js');
+
+// init/app-settings-loaded is used in ui.js but registered here.
+register('init/app-settings-loaded', appSettings.load());
+
+// init/cookies-accepted is registered in ui.js but used here.
+const cookiesInitialized = once('init/cookies-accepted').then(cookies.init);
+register('init/cookies-initialized', cookiesInitialized);
+```
+
+Dependencies and dependents can be declared separately. 
+
+### ui.js
+
+```javascript
+const { register, once } = require('promise-registry');
+const userMessage = require('./user-message.js');
+const loadUserSettings = require('./user-settings.js');
+
+// init/cookies-accepted is used in init.js but registered here.
+register('init/cookies-accepted', userMessage.waitForAcceptCookies());
+
+// init/cookies-initialized and init/app-settings-loaded 
+//   are registered in init.js but used here.
+const userSettingsLoaded = Promise.all([
+    once('init/cookies-initialized'),
+    once('init/app-settings-loaded')
+]).then(([cookies, appSettings]) => loadUserSettings(cookies, appSettings));
+```
+
+It's all loaded in the right order as long as the registries (including the
+global one) and names match up.
 
 ## Installation
 
@@ -29,7 +77,7 @@ npm install promise-registry --save
 
 In [Node.js](https://nodejs.org/):
 
-```js
+```javascript
 const promiseRegistry = require('promise-registry');
 ```
 
