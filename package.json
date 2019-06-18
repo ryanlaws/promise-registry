@@ -14,7 +14,7 @@
         "type": "git",
         "url": "https://github.com/ryanlaws/promise-registry.git"
     },
-    "license": "ISC",
+    "license": "MIT",
     "devDependencies": {
         "babel-preset-env": "^1.7.0"
     },
