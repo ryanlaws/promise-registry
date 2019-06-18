@@ -1,6 +1,6 @@
 {
     "name": "promise-registry",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "Creates a registry of promises to which promises can be registered and from which promises can be obtained.",
     "main": "promise-registry.js",
     "jsnext:main": "promise-registry.es6.js",
